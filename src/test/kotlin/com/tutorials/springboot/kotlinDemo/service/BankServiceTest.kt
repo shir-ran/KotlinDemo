@@ -23,7 +23,7 @@ internal class BankServiceTest{
         val banks = bankService.getBanks()
         
         // then
-        verify{ dataSource.retrieveBanks()}
+        verify(exactly = 1){ dataSource.retrieveBanks()}
         
     }
 }
