@@ -29,7 +29,7 @@ internal class BankControllerTest @Autowired constructor(
 
 
     @Nested
-    @DisplayName("getBanks()")
+    @DisplayName("get /api/banks")
     @TestInstance(TestInstance.Lifecycle.PER_CLASS)
     inner class GetBanks{
         @Test
@@ -44,10 +44,21 @@ internal class BankControllerTest @Autowired constructor(
                     jsonPath("$[0].accountNumber"){value("12-655-125478")}
                 }
         }
+
+        //@Test
+        fun `should return no content when list of banks is empty`(){
+            // when/then
+            mockMvc.get("$baseUrl")
+                .andDo{print()}
+                .andExpect{
+                    status{ isNoContent()}
+                }
+
+        }
     }
 
     @Nested
-    @DisplayName("getBank()")
+    @DisplayName("get /api/banks/{accountNumber}")
     @TestInstance(TestInstance.Lifecycle.PER_CLASS)
     inner class GetBank{
         @Test
@@ -82,7 +93,7 @@ internal class BankControllerTest @Autowired constructor(
     }
     
     @Nested
-    @DisplayName("post /ai/banks")
+    @DisplayName("post /api/banks")
     @TestInstance(TestInstance.Lifecycle.PER_CLASS)
     inner class PostNewBank {
         @Test
