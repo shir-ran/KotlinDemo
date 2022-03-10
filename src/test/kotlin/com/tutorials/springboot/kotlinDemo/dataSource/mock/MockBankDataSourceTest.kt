@@ -1,9 +1,11 @@
 package com.tutorials.springboot.kotlinDemo.dataSource.mock
 
 import ch.qos.logback.core.spi.LifeCycle
+import com.tutorials.springboot.kotlinDemo.model.Bank
 import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.*
+import org.junit.jupiter.api.Assertions.assertEquals
 
 internal class MockBankDataSourceTest{
 
@@ -46,7 +48,7 @@ internal class MockBankDataSourceTest{
         @Test
         fun `should retrieve a bank account`() {
             // given
-            val accountNumber: String = "12-655-125478"
+            val accountNumber = "12-655-125478"
 
             // when
             val bank = mockBankDataSource.retrieveBank(accountNumber)
@@ -59,11 +61,42 @@ internal class MockBankDataSourceTest{
         @Test
         fun `should fail to retrieve a non existing account`() {
             // given
-            val accountNumber: String = "not_exist"
+            val accountNumber = "not_exist"
 
             // when/then
             assertThrows<NoSuchElementException> { mockBankDataSource.retrieveBank(accountNumber) }
 
+        }
+
+    }
+
+    @Nested
+    @DisplayName("updateBank")
+    @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+    inner class UpdateBank {
+
+
+        @Test
+        fun `should update an existing bank`() {
+            //given
+            val bank = Bank("12-655-125566", 72.6, 1)
+
+            // when
+            val actualBank = mockBankDataSource.updateBank(bank)
+
+            // then
+            assertEquals(bank, actualBank)
+        }
+
+        @Test
+        fun `should fail to update non existing bank`() {
+            //given
+            val bank = Bank("not_found", 72.6, 1)
+
+            // when
+            assertThrows<NoSuchElementException> {
+                mockBankDataSource.updateBank(bank)
+            }
         }
 
     }

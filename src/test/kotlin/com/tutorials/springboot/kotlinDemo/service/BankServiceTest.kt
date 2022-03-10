@@ -1,6 +1,7 @@
 package com.tutorials.springboot.kotlinDemo.service
 
 import com.tutorials.springboot.kotlinDemo.dataSource.BankDataSource
+import com.tutorials.springboot.kotlinDemo.model.Bank
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -20,10 +21,25 @@ internal class BankServiceTest{
         //every { dataSource.retrieveBanks()} returns emptyList()
 
         // when
-        val banks = bankService.getBanks()
+        bankService.getBanks()
         
         // then
         verify(exactly = 1){ dataSource.retrieveBanks()}
         
     }
+
+    @Test
+    fun `should update an existing bank`() {
+        //given
+        val bank = Bank("12-655-125566", 72.6, 1)
+
+        // when
+        bankService.updateBank(bank)
+
+        // then
+        verify(exactly = 1){ dataSource.updateBank(bank)}
+    }
+
+
+
 }

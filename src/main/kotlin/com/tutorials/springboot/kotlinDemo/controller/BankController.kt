@@ -37,4 +37,9 @@ class BankController(
         return bankService.addNewBank(bank)
     }
 
+    @PatchMapping("banks")
+    fun updateBank(@RequestBody bank : Bank):  Bank {
+        return bankService.updateBank(bank)
+    }
+
 }
