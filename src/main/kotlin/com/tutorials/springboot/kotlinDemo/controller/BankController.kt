@@ -42,4 +42,10 @@ class BankController(
         return bankService.updateBank(bank)
     }
 
+    @DeleteMapping("banks/{accountNumber}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun deleteBank(@PathVariable accountNumber : String) : Unit {
+        return bankService.deleteBank(accountNumber)
+    }
+
 }

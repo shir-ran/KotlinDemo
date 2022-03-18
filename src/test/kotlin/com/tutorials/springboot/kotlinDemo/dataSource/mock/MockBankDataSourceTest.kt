@@ -1,8 +1,6 @@
 package com.tutorials.springboot.kotlinDemo.dataSource.mock
 
-import ch.qos.logback.core.spi.LifeCycle
 import com.tutorials.springboot.kotlinDemo.model.Bank
-import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -96,6 +94,37 @@ internal class MockBankDataSourceTest{
             // when
             assertThrows<NoSuchElementException> {
                 mockBankDataSource.updateBank(bank)
+            }
+        }
+
+    }
+
+    @Nested
+    @DisplayName("deleteBank")
+    @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+    inner class DeleteBank {
+
+
+        @Test
+        fun `should delete an existing bank`() {
+            //given
+            val accountNumber = "12-655-125566"
+
+            // when
+            mockBankDataSource.deleteBank(accountNumber)
+
+            // then
+            assertThrows<NoSuchElementException> { mockBankDataSource.retrieveBank(accountNumber) }
+        }
+
+        @Test
+        fun `should fail to delete non existing bank`() {
+            //given
+            val accountNumber = "not_found"
+
+            // when
+            assertThrows<NoSuchElementException> {
+                mockBankDataSource.deleteBank(accountNumber)
             }
         }
 

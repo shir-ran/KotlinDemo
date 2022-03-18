@@ -1,0 +1,20 @@
+FIRST principles for testing:
+Fast - tests should run fast so it will stay easy to run them often but without
+wasting resources.
+It is faster to run the tests if there is no application context we need to load.
+(minimal spring annotations)
+
+Isolated - independent test that can be run in any arbitrary order.
+If some of your test change or delete existing objects - you should counteract it
+after the test is done.
+If that requires too much effort and it is simply easier to reboot the context - we
+can ask that by using the @DirtiesContext annotation.
+
+Repeatable - the same result should be given at every run, not flaky tests
+
+Self-validating - test the results that the actual result is identical to the
+expected result.
+
+Timely - test should be written before the code is written, or at least in the
+same time.
+
